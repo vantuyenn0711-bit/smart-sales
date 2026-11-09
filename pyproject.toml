@@ -1,0 +1,35 @@
+[project]
+name = "smart-sales"
+version = "0.1.0"
+description = "Vietnamese internal sales management with transactional inventory and payments"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "Django>=5.2,<5.3",
+  "psycopg[binary]>=3.2,<4",
+  "django-environ>=0.12,<1",
+  "whitenoise>=6.9,<7",
+  "Pillow>=11,<13",
+  "openpyxl>=3.1,<4",
+  "gunicorn>=23,<26; sys_platform != 'win32'",
+]
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-django>=4.11,<5", "ruff>=0.11,<1", "playwright>=1.51,<2"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["test_*.py"]
+testpaths = ["tests"]
+addopts = "--strict-markers -ra"
+markers = ["postgresql: requires real PostgreSQL locks", "browser: browser-driven end-to-end tests"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 110
+exclude = [".tools", ".cache", ".venv", "staticfiles"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ruff.lint.per-file-ignores]
+"*/migrations/*.py" = ["I"]

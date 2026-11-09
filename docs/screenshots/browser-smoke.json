@@ -1,0 +1,233 @@
+{
+  "browser": "Chrome",
+  "viewports": [
+    375,
+    768,
+    1440
+  ],
+  "checks": [
+    {
+      "viewport": 375,
+      "route": "/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/products/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/orders/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/orders/new/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/customers/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/inventory/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/inventory/movements/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/payments/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/reports/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/categories/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/team/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 375,
+      "route": "/audit/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/products/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/orders/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/orders/new/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/customers/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/inventory/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/inventory/movements/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/payments/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/reports/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/categories/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/team/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 768,
+      "route": "/audit/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/products/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/orders/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/orders/new/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/customers/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/inventory/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/inventory/movements/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/payments/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/reports/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/categories/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/team/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "viewport": 1440,
+      "route": "/audit/",
+      "status": 200,
+      "no_overflow": true
+    },
+    {
+      "excel_browser_download": "pass"
+    },
+    {
+      "viewer_direct_write_and_admin_routes": "403"
+    }
+  ],
+  "page_errors": []
+}

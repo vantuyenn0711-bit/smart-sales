@@ -1,0 +1,29 @@
+{% extends 'base.html' %}{% load static sales_tags %}
+{% block title %}Tổng quan · Smart Sales{% endblock %}
+{% block page_title %}Tổng quan kinh doanh{% endblock %}
+{% block page_subtitle %}Mọi con số, một góc nhìn. Theo dõi hoạt động cửa hàng của bạn.{% endblock %}
+{% block actions %}<a class="button secondary" href="{% url 'analytics:export' %}?{{ request.GET.urlencode }}">↓ Xuất báo cáo</a>{% if can_sell %}<a class="button primary" href="{% url 'core:order_create' %}">＋ Tạo đơn hàng</a>{% endif %}{% endblock %}
+{% block content %}
+<div id="analytics-content" class="stack">
+  <div class="overview-intro"><div><span class="eyebrow">HIỆU SUẤT CỬA HÀNG</span><h2>Chào {{ request.user.first_name|default:request.user.username }} <span aria-hidden="true">✦</span></h2><p class="text-muted">Nắm bắt kết quả hôm nay, sẵn sàng cho bước tiếp theo.</p></div><span class="badge success">● Dữ liệu từ giao dịch</span></div>
+  {% include 'analytics/_filters.html' %}
+  {% if metrics %}
+  {% include 'analytics/_metrics.html' %}
+  <div class="dashboard-grid">
+    <section class="panel"><div class="panel-header"><div><h2>Doanh thu theo thời gian</h2><p>{{ start|date:'d/m/Y' }} – {{ end|date:'d/m/Y' }} · VND</p></div><span class="badge info">{{ metrics.completed_count }} đơn hoàn thành</span></div><div class="panel-body"><div class="chart-legend"><span><i class="legend-dot revenue-dot"></i>Doanh thu</span><span><i class="legend-dot receipts-dot"></i>Tiền đã thu</span></div><div class="chart-container"><canvas id="revenue-chart" role="img" aria-label="Biểu đồ doanh thu và tiền đã thu theo từng ngày"></canvas></div><noscript><p>Doanh thu kỳ này: {{ metrics.revenue|money }}. Xem bảng chi tiết trong <a href="{% url 'analytics:reports' %}?{{ request.GET.urlencode }}">báo cáo</a>.</p></noscript></div></section>
+    <section class="panel"><div class="panel-header"><div><h2>Sản phẩm bán chạy</h2><p>Theo số lượng trên đơn hoàn thành</p></div><span class="badge muted">TOP 5</span></div><div class="panel-body top-products">{% for product in top_products %}<div class="top-product"><span class="rank">0{{ forloop.counter }}</span><div class="top-product-info"><div class="cell-title">{{ product.product__name }}</div><div class="cell-meta">{{ product.product__sku }} · {{ product.quantity }} đã bán</div></div><div class="amount">{{ product.revenue|money }}</div></div>{% empty %}<div class="empty-state"><span class="empty-icon">◇</span><h3>Chưa có sản phẩm bán ra</h3><p>Sản phẩm xuất hiện khi đơn hàng hoàn thành.</p></div>{% endfor %}<p class="cell-meta">Giá trị dòng hàng trước chiết khấu đơn.</p></div></section>
+  </div>
+  <div class="dashboard-grid">
+    <section class="panel"><div class="panel-header"><div><h2>Đơn hàng gần đây</h2><p>Các đơn được tạo trong khoảng thời gian đã chọn</p></div><a class="text-link" href="{% url 'core:order_list' %}">Xem tất cả →</a></div><div class="table-wrap"><table class="data-table"><thead><tr><th>Mã đơn hàng</th><th>Khách hàng</th><th>Trạng thái</th><th class="amount">Giá trị</th></tr></thead><tbody>{% for order in recent_orders %}<tr><td><a class="cell-title text-link" href="{% url 'core:order_detail' order.pk %}">{{ order.order_no }}</a><div class="cell-meta">{{ order.created_at|date:'d/m/Y H:i' }}</div></td><td>{{ order.customer.name|default:'Khách lẻ' }}</td><td><span class="badge status-{{ order.status }}">{{ order.get_status_display }}</span></td><td class="amount">{{ order.total|money }}</td></tr>{% empty %}<tr><td colspan="4"><div class="empty-state"><h3>Chưa có đơn hàng</h3><p>Đổi khoảng thời gian hoặc tạo đơn đầu tiên.</p></div></td></tr>{% endfor %}</tbody></table></div></section>
+    <section class="panel"><div class="panel-header"><div><h2>Trạng thái đơn hàng</h2><p>Theo ngày tạo đơn trong kỳ</p></div><span class="badge muted">{{ metrics.order_count }} đơn</span></div><div class="panel-body status-overview">{% for item in status_counts %}<div class="status-row"><span><i class="status-dot status-{{ item.status }}"></i>{{ item.label }}</span><strong>{{ item.count }}</strong></div>{% endfor %}<div class="subtle-note">Doanh thu chỉ được ghi nhận khi đơn hoàn thành.</div></div></section>
+  </div>
+  <div class="grid-2">
+    <section class="panel"><div class="panel-header"><div><h2>Cần chú ý tồn kho</h2><p>{{ low_stock_count }} sản phẩm chạm ngưỡng tồn thấp</p></div><a class="text-link" href="{% url 'core:inventory_list' %}">Quản lý kho →</a></div><div class="panel-body">{% for product in low_stock %}<div class="status-row"><div><span class="cell-title">{{ product.name }}</span><div class="cell-meta">{{ product.sku }}</div></div><span class="badge warning">Còn {{ product.stock.quantity_on_hand }}</span></div>{% empty %}<div class="empty-state"><h3>Tồn kho trong tầm kiểm soát</h3><p>Chưa có sản phẩm chạm ngưỡng cảnh báo.</p></div>{% endfor %}</div></section>
+    <section class="panel"><div class="panel-header"><div><h2>Hoạt động mới nhất</h2><p>Nhật ký thao tác được ghi tại hệ thống</p></div>{% if can_manage %}<a class="text-link" href="{% url 'core:audit_list' %}">Nhật ký →</a>{% endif %}</div><div class="panel-body">{% for event in recent_activity %}<div class="activity-row"><span class="activity-marker"></span><div><div class="cell-title">{{ event.action }}</div><div class="cell-meta">{{ event.actor.get_full_name|default:event.actor.username }} · {{ event.created_at|date:'d/m H:i' }}</div></div></div>{% empty %}<div class="empty-state"><h3>Chưa có hoạt động</h3><p>Nhật ký xuất hiện sau thao tác đầu tiên.</p></div>{% endfor %}</div></section>
+  </div>
+  <p class="cell-meta report-disclaimer">Báo cáo nội bộ · Múi giờ Việt Nam · Chưa bao gồm trả hàng / hoàn tiền (giai đoạn P2).</p>
+  {{ chart_data|json_script:'revenue-data' }}
+  {% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'vendor/chart.umd.js' %}" defer></script><script src="{% static 'js/analytics.js' %}" defer></script>{% endblock %}

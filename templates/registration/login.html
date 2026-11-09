@@ -1,0 +1,53 @@
+{% load static %}
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Đăng nhập · Smart Sales</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script src="{% static 'js/app.js' %}" defer></script>
+</head>
+<body class="login-page">
+<main class="login-layout">
+  <section class="login-story">
+    <a class="brand" href="{% url 'login' %}"><span class="brand-mark">↗</span><span>smart<span class="brand-light">sales</span><small>QUẢN LÝ BÁN HÀNG</small></span></a>
+    <div class="login-story-content">
+      <span class="eyebrow">KHÔNG GIAN LÀM VIỆC CỦA BẠN</span>
+      <h1>Bán hàng thông minh.<br>Vận hành tự tin.</h1>
+      <p>Kết nối đơn hàng, khách hàng và tồn kho trong một không gian làm việc rõ ràng.</p>
+      <div class="login-feature-list"><span>01 <strong>Mọi giao dịch được ghi nhận</strong></span><span>02 <strong>Số liệu cập nhật từ hoạt động thực tế</strong></span><span>03 <strong>Phân quyền theo từng vai trò</strong></span></div>
+    </div>
+    <div class="login-story-footer">SMART SALES / BUSINESS WORKSPACE</div>
+    <div class="login-orbit" aria-hidden="true"></div>
+  </section>
+  <section class="login-form-section">
+    <div class="login-card">
+      <span class="login-welcome">CHÀO MỪNG TRỞ LẠI</span>
+      <h2>Đăng nhập</h2>
+      <p class="text-muted">Tiếp tục quản lý công việc kinh doanh của bạn.</p>
+      <form method="post" data-loading>
+        {% csrf_token %}
+        {% if form.errors %}<div class="notice error" role="alert">Tên đăng nhập hoặc mật khẩu chưa đúng. Vui lòng kiểm tra lại.</div>{% endif %}
+        <input type="hidden" name="next" value="{{ next }}">
+        <div class="form-field">
+          <label for="id_username">Tên đăng nhập</label>
+          <input id="id_username" class="input" name="username" value="{{ form.username.value|default:'' }}" autocomplete="username" required autofocus placeholder="Nhập tên đăng nhập">
+        </div>
+        <div class="form-field">
+          <label for="id_password">Mật khẩu</label>
+          <div class="password-input-wrap">
+            <input id="id_password" class="input" name="password" type="password" autocomplete="current-password" aria-describedby="password-help" required placeholder="Nhập mật khẩu">
+            <button class="password-toggle" type="button" aria-controls="id_password" aria-pressed="false" aria-label="Hiện mật khẩu" data-password-toggle hidden>Hiện</button>
+          </div>
+          <p class="login-password-help" id="password-help">Mật khẩu phân biệt chữ hoa, chữ thường.</p>
+        </div>
+        <button type="submit" class="button primary full-width">Đăng nhập <span>→</span></button>
+      </form>
+      <p class="login-help">Cần tài khoản hoặc đặt lại mật khẩu?<br>Liên hệ quản trị viên của bạn.</p>
+      <div class="login-security"><span class="status-dot"></span> Truy cập dành cho thành viên được cấp quyền</div>
+    </div>
+    <p class="login-copyright">© {% now 'Y' %} Smart Sales. Không gian quản lý bán hàng.</p>
+  </section>
+</main>
+</body>
+</html>

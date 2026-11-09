@@ -1,0 +1,7 @@
+{% load sales_tags %}
+<div class="metrics-grid">
+  <article class="metric"><div class="metric-label">Doanh thu hoàn thành <span class="metric-icon">↗</span></div><div class="metric-value">{{ metrics.revenue|money }}</div><div class="metric-foot">Kỳ trước: {{ previous_metrics.revenue|money }}</div></article>
+  <article class="metric"><div class="metric-label">Tiền đã thu <span class="metric-icon">₫</span></div><div class="metric-value">{{ metrics.receipts|money }}</div><div class="metric-foot">Theo thời điểm ghi nhận thanh toán</div></article>
+  <article class="metric"><div class="metric-label">Đơn hàng mới <span class="metric-icon">▤</span></div><div class="metric-value">{{ metrics.order_count }}</div><div class="metric-foot">{{ metrics.completed_count }} đơn ghi nhận doanh thu</div></article>
+  <article class="metric"><div class="metric-label">Giá trị đơn trung bình <span class="metric-icon">◈</span></div><div class="metric-value">{{ metrics.average_order|money }}</div><div class="metric-foot">Tính trên đơn hoàn thành trong kỳ</div></article>
+</div>

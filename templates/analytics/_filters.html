@@ -1,0 +1,7 @@
+<form method="get" class="filter-bar" aria-label="Lọc báo cáo" data-loading>
+  {% for field in filter_form %}<div class="filter-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% for error in field.errors %}<span class="field-error" role="alert">{{ error }}</span>{% endfor %}</div>{% endfor %}
+  <button class="button secondary" type="submit">Áp dụng bộ lọc</button>
+  <a class="button ghost" href="{{ request.path }}">Đặt lại</a>
+</form>
+{% if filter_form.non_field_errors %}<div class="alert error" role="alert">{{ filter_form.non_field_errors }}</div>{% endif %}
+{% if filters.category %}<p class="text-muted filter-note">Danh mục lọc toàn bộ đơn có chứa sản phẩm thuộc danh mục đã chọn; số tiền bao gồm toàn đơn.</p>{% endif %}

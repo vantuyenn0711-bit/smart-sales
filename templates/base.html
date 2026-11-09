@@ -1,0 +1,66 @@
+{% load static sales_tags %}
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#12233f"><meta name="description" content="Smart Sales — Không gian quản lý bán hàng, tồn kho và doanh thu.">
+  <title>{% block title %}Smart Sales · Quản lý bán hàng{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}"><link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <script src="{% static 'vendor/htmx.min.js' %}" defer></script><script src="{% static 'js/app.js' %}" defer></script>
+  <link rel="stylesheet" href="{% static 'css/analytics.css' %}">{% block extra_head %}{% endblock %}
+</head>
+<body>
+<a class="skip-link" href="#main-content">Đi đến nội dung</a>
+<svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 7h14l1 14H4L5 7Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+<symbol id="i-box" viewBox="0 0 24 24"><path d="m12 3 9 5v9l-9 5-9-5V8l9-5Z"/><path d="m3 8 9 5 9-5M12 13v9M8 5l9 5"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 21v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6M21 21v-3a6 6 0 0 0-3-5"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24"><path d="M21 8H5a2 2 0 0 1-2-2v13a2 2 0 0 0 2 2h16V8ZM3 6V5a2 2 0 0 1 2-2h14v5"/><path d="M21 12h-6v5h6"/><path d="M17 14.5h1"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 3v18h18M7 15l4-5 4 3 6-9M17 4h4v4"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="m9 3-1 3-3 1-2 4 2 2v4l4 2 2-1 3 3 4-2v-4l3-2-1-4-3-1-1-3H9Z"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+<symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 3h9l9 9-9 9-9-9V3Z"/><circle cx="8" cy="8" r="1"/></symbol>
+</defs></svg>
+<div class="sidebar-backdrop" data-close-menu></div>
+<aside class="sidebar" id="sidebar" aria-label="Điều hướng chính">
+  <a class="brand" href="{% url 'core:dashboard' %}"><span class="brand-mark"><svg class="icon"><use href="#i-chart"/></svg></span><span>smart<span class="brand-light">sales</span><small>QUẢN LÝ BÁN HÀNG</small></span></a>
+  <div class="workspace-label"><span class="workspace-dot"></span> Không gian làm việc <span class="workspace-key">S</span></div>
+  <p class="nav-label">TỔNG QUAN</p>
+  {% with current=request.resolver_match.url_name %}
+  <nav class="nav-list">
+    <a class="nav-link {% if current == 'dashboard' %}active{% endif %}" href="{% url 'core:dashboard' %}"><svg class="icon"><use href="#i-grid"/></svg>Tổng quan</a>
+    <a class="nav-link {% if 'order' in current %}active{% endif %}" href="{% url 'core:order_list' %}"><svg class="icon"><use href="#i-bag"/></svg>Đơn hàng</a>
+    <a class="nav-link {% if 'product' in current %}active{% endif %}" href="{% url 'core:product_list' %}"><svg class="icon"><use href="#i-box"/></svg>Sản phẩm</a>
+    <a class="nav-link {% if 'customer' in current %}active{% endif %}" href="{% url 'core:customer_list' %}"><svg class="icon"><use href="#i-users"/></svg>Khách hàng</a>
+    <a class="nav-link {% if current == 'payment_list' %}active{% endif %}" href="{% url 'core:payment_list' %}"><svg class="icon"><use href="#i-wallet"/></svg>Thanh toán</a>
+    <a class="nav-link {% if 'inventory' in current or 'stock' in current or current == 'movement_list' %}active{% endif %}" href="{% url 'core:inventory_list' %}"><svg class="icon"><use href="#i-box"/></svg>Tồn kho</a>
+  </nav>
+  <p class="nav-label">PHÂN TÍCH & QUẢN TRỊ</p>
+  <nav class="nav-list">
+    <a class="nav-link {% if current == 'reports' %}active{% endif %}" href="{% url 'analytics:reports' %}"><svg class="icon"><use href="#i-chart"/></svg>Báo cáo kinh doanh</a>
+    <a class="nav-link {% if 'category' in current %}active{% endif %}" href="{% url 'core:category_list' %}"><svg class="icon"><use href="#i-tag"/></svg>Danh mục</a>
+    {% if can_manage %}<a class="nav-link {% if current == 'audit_list' %}active{% endif %}" href="{% url 'core:audit_list' %}"><svg class="icon"><use href="#i-clock"/></svg>Nhật ký hoạt động</a>{% endif %}
+    {% if is_admin %}<a class="nav-link {% if 'user' in current %}active{% endif %}" href="{% url 'core:user_list' %}"><svg class="icon"><use href="#i-settings"/></svg>Đội ngũ & phân quyền</a>{% endif %}
+  </nav>{% endwith %}
+  <div class="sidebar-bottom"><div class="sidebar-note"><svg class="icon"><use href="#i-check"/></svg><div>Dữ liệu trong tầm tay<small>Mỗi giao dịch, một dấu vết rõ ràng.</small></div></div><div class="sidebar-version">SMART SALES <span>WORKSPACE / V1.0</span></div></div>
+</aside>
+<div class="app-shell">
+  <header class="topbar"><div class="topbar-left"><button class="icon-button mobile-menu" type="button" data-toggle-menu aria-label="Mở menu" aria-controls="sidebar" aria-expanded="false"><svg class="icon"><use href="#i-menu"/></svg></button><span class="breadcrumb-brand">Không gian làm việc</span><span class="breadcrumb-divider">/</span><span class="breadcrumb-current">Smart Sales</span></div>
+  <div class="topbar-right">{% if demo_mode %}<span class="badge demo-badge"><span class="status-dot"></span>Dữ liệu demo</span>{% endif %}<span class="topbar-date">{% now 'd/m/Y' %}</span><div class="topbar-separator"></div><span class="avatar user-avatar">{{ request.user.get_full_name|default:request.user.username|initials }}</span><div class="user-identity"><strong>{{ request.user.get_full_name|default:request.user.username }}</strong><small>{{ request.user.get_role_display }}</small></div><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit" class="logout-button" title="Đăng xuất" aria-label="Đăng xuất">↗</button></form></div></header>
+  <main id="main-content" class="main-content"><div id="connection-error" class="notice error" role="alert" hidden>Không thể kết nối. Kiểm tra mạng rồi thử lại; dữ liệu đang nhập vẫn được giữ trên trang.</div>
+    {% if messages %}<div class="toast-stack" aria-live="polite">{% for message in messages %}<div class="notice {{ message.tags }}">{{ message }}<button type="button" data-dismiss aria-label="Đóng thông báo">×</button></div>{% endfor %}</div>{% endif %}
+    <div class="page-heading"><div><p class="eyebrow">SMART SALES WORKSPACE</p><h1>{% block page_title %}{{ page_title|default:'Tổng quan' }}{% endblock %}</h1><p class="page-subtitle">{% block page_subtitle %}{{ subtitle|default:'Quản lý công việc bán hàng, rõ ràng và hiệu quả.' }}{% endblock %}</p></div><div class="page-actions">{% block actions %}{% endblock %}</div></div>
+    {% block content %}{% endblock %}
+    <footer class="main-footer"><span>© {% now 'Y' %} Smart Sales</span><span><span class="status-dot"></span> Theo dõi chính xác. Vận hành tự tin.</span></footer>
+  </main>
+</div>
+<div class="page-loading" id="page-loading" role="status" aria-label="Đang xử lý"></div>
+{% block extra_js %}{% endblock %}
+</body></html>

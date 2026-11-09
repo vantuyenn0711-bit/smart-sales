@@ -1,0 +1,3 @@
+{% extends 'base.html' %}
+{% block page_title %}Điều chỉnh tồn kho{% endblock %}{% block page_subtitle %}{{ product.name }} · {{ product.sku }}{% endblock %}
+{% block content %}<section class="panel narrow-panel"><form method="post" action="{% url 'core:stock_adjust' product.pk %}" class="panel-body" data-loading>{% csrf_token %}{% include 'includes/form_fields.html' %}<div class="form-actions"><a href="{% url 'core:inventory_list' %}" class="button secondary">Quay lại</a><button class="button primary">Lưu điều chỉnh</button></div></form></section>{% endblock %}
